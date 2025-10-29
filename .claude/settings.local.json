@@ -7,7 +7,14 @@
       "Bash(flutter analyze:*)",
       "Bash(flutter build:*)",
       "mcp__ide__getDiagnostics",
-      "Bash(flutter pub get:*)"
+      "Bash(flutter pub get:*)",
+      "Bash(flutter run:*)",
+      "Bash(timeout:*)",
+      "Bash(dart pub global activate:*)",
+      "Bash(C:UsershanepAppDataLocalPubCachebinflutterfire configure --project=signlink-840fb --platforms=web --yes)",
+      "Bash(\"C:\\Users\\hanep\\AppData\\Local\\Pub\\Cache\\bin\\flutterfire.bat\" configure --project=signlink-840fb --platforms=web --yes)",
+      "Bash(flutter clean:*)",
+      "Bash(dir:*)"
     ],
     "deny": [],
     "ask": []
