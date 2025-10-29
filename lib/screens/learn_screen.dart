@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../services/database_helper.dart';
+import '../services/firebase_service.dart';
 import '../models/sign_language_module.dart';
 
 class LearnScreen extends StatefulWidget {
@@ -10,7 +10,7 @@ class LearnScreen extends StatefulWidget {
 }
 
 class _LearnScreenState extends State<LearnScreen> {
-  final _db = DatabaseHelper.instance;
+  final _firebaseService = FirebaseService.instance;
   List<SignLanguageModule> _signs = [];
   bool _isLoading = true;
 
@@ -22,7 +22,7 @@ class _LearnScreenState extends State<LearnScreen> {
 
   Future<void> _loadSigns() async {
     setState(() => _isLoading = true);
-    final signs = await _db.getAllSignModules();
+    final signs = await _firebaseService.getAllSignModules();
     setState(() {
       _signs = signs;
       _isLoading = false;

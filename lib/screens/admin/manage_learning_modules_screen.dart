@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../services/database_helper.dart';
+import '../../services/firebase_service.dart';
 import '../../models/learning_module.dart';
 import 'learning_module_form_screen.dart';
 
@@ -13,7 +13,7 @@ class ManageLearningModulesScreen extends StatefulWidget {
 
 class _ManageLearningModulesScreenState
     extends State<ManageLearningModulesScreen> {
-  final _db = DatabaseHelper.instance;
+  final _firebaseService = FirebaseService.instance;
   List<LearningModule> _modules = [];
   bool _isLoading = true;
 
@@ -25,7 +25,7 @@ class _ManageLearningModulesScreenState
 
   Future<void> _loadModules() async {
     setState(() => _isLoading = true);
-    final modules = await _db.getAllLearningModules();
+    final modules = await _firebaseService.getAllLearningModules();
     setState(() {
       _modules = modules;
       _isLoading = false;
@@ -52,7 +52,7 @@ class _ManageLearningModulesScreenState
     );
 
     if (confirm == true && module.id != null) {
-      await _db.deleteLearningModule(module.id!);
+      await _firebaseService.deleteLearningModule(module.id!);
       _loadModules();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

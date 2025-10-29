@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../services/database_helper.dart';
+import '../../services/firebase_service.dart';
 import '../../models/sign_language_module.dart';
 
 class SignModuleFormScreen extends StatefulWidget {
@@ -44,7 +44,7 @@ class _SignModuleFormScreenState extends State<SignModuleFormScreen> {
 
     setState(() => _isLoading = true);
 
-    final db = DatabaseHelper.instance;
+    final firebaseService = FirebaseService.instance;
 
     if (widget.module == null) {
       // Create new module
@@ -55,8 +55,9 @@ class _SignModuleFormScreenState extends State<SignModuleFormScreen> {
         videoPath: _videoPathController.text.trim().isEmpty
             ? null
             : _videoPathController.text.trim(),
+        createdAt: DateTime.now(),
       );
-      await db.createSignModule(newModule);
+      await firebaseService.createSignModule(newModule);
     } else {
       // Update existing module
       final updatedModule = widget.module!.copyWith(
@@ -66,8 +67,9 @@ class _SignModuleFormScreenState extends State<SignModuleFormScreen> {
         videoPath: _videoPathController.text.trim().isEmpty
             ? null
             : _videoPathController.text.trim(),
+        updatedAt: DateTime.now(),
       );
-      await db.updateSignModule(updatedModule);
+      await firebaseService.updateSignModule(updatedModule);
     }
 
     setState(() => _isLoading = false);

@@ -1,10 +1,10 @@
 class LearningModule {
-  final int? id;
+  final String? id;
   final String title;
   final String content;
   final String difficulty; // 'beginner', 'intermediate', 'advanced'
   final int orderIndex;
-  final List<int>? signLanguageModuleIds; // Related sign modules
+  final List<String>? signLanguageModuleIds; // Related sign modules
   final DateTime createdAt;
   final DateTime? updatedAt;
 
@@ -20,21 +20,27 @@ class LearningModule {
   }) : createdAt = createdAt ?? DateTime.now();
 
   Map<String, dynamic> toMap() {
-    return {
-      'id': id,
+    final map = {
       'title': title,
       'content': content,
       'difficulty': difficulty,
       'orderIndex': orderIndex,
-      'signLanguageModuleIds': signLanguageModuleIds?.join(','),
       'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt?.toIso8601String(),
     };
+
+    if (signLanguageModuleIds != null && signLanguageModuleIds!.isNotEmpty) {
+      map['signLanguageModuleIds'] = signLanguageModuleIds!.join(',');
+    }
+    if (updatedAt != null) {
+      map['updatedAt'] = updatedAt!.toIso8601String();
+    }
+
+    return map;
   }
 
   factory LearningModule.fromMap(Map<String, dynamic> map) {
     return LearningModule(
-      id: map['id'] as int?,
+      id: map['id'] as String?,
       title: map['title'] as String,
       content: map['content'] as String,
       difficulty: map['difficulty'] as String,
@@ -42,7 +48,7 @@ class LearningModule {
       signLanguageModuleIds: map['signLanguageModuleIds'] != null
           ? (map['signLanguageModuleIds'] as String)
               .split(',')
-              .map((e) => int.parse(e))
+              .where((e) => e.isNotEmpty)
               .toList()
           : null,
       createdAt: DateTime.parse(map['createdAt'] as String),
@@ -53,12 +59,12 @@ class LearningModule {
   }
 
   LearningModule copyWith({
-    int? id,
+    String? id,
     String? title,
     String? content,
     String? difficulty,
     int? orderIndex,
-    List<int>? signLanguageModuleIds,
+    List<String>? signLanguageModuleIds,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {

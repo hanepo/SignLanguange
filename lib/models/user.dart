@@ -1,5 +1,5 @@
 class User {
-  final int? id;
+  final String? id;
   final String email;
   final String password;
   final String fullName;
@@ -18,20 +18,24 @@ class User {
   }) : createdAt = createdAt ?? DateTime.now();
 
   Map<String, dynamic> toMap() {
-    return {
-      'id': id,
+    final map = {
       'email': email,
       'password': password,
       'fullName': fullName,
       'role': role,
       'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt?.toIso8601String(),
     };
+
+    if (updatedAt != null) {
+      map['updatedAt'] = updatedAt!.toIso8601String();
+    }
+
+    return map;
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['id'] as int?,
+      id: map['id'] as String?,
       email: map['email'] as String,
       password: map['password'] as String,
       fullName: map['fullName'] as String,
@@ -44,7 +48,7 @@ class User {
   }
 
   User copyWith({
-    int? id,
+    String? id,
     String? email,
     String? password,
     String? fullName,

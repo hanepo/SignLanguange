@@ -1,5 +1,5 @@
 class SignLanguageModule {
-  final int? id;
+  final String? id;
   final String word;
   final String description;
   final String assetPath;
@@ -18,20 +18,26 @@ class SignLanguageModule {
   }) : createdAt = createdAt ?? DateTime.now();
 
   Map<String, dynamic> toMap() {
-    return {
-      'id': id,
+    final map = {
       'word': word,
       'description': description,
       'assetPath': assetPath,
-      'videoPath': videoPath,
       'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt?.toIso8601String(),
     };
+
+    if (videoPath != null) {
+      map['videoPath'] = videoPath!;
+    }
+    if (updatedAt != null) {
+      map['updatedAt'] = updatedAt!.toIso8601String();
+    }
+
+    return map;
   }
 
   factory SignLanguageModule.fromMap(Map<String, dynamic> map) {
     return SignLanguageModule(
-      id: map['id'] as int?,
+      id: map['id'] as String?,
       word: map['word'] as String,
       description: map['description'] as String,
       assetPath: map['assetPath'] as String,
@@ -44,7 +50,7 @@ class SignLanguageModule {
   }
 
   SignLanguageModule copyWith({
-    int? id,
+    String? id,
     String? word,
     String? description,
     String? assetPath,

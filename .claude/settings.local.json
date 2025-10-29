@@ -3,7 +3,11 @@
     "allow": [
       "Bash(Select-String -Pattern \"exception|error|Exception|Error|FATAL\")",
       "Bash(Select-Object -Last 30)",
-      "Bash(\"C:\\Users\\hanep\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe\" -s emulator-5554 logcat -d)"
+      "Bash(\"C:\\Users\\hanep\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe\" -s emulator-5554 logcat -d)",
+      "Bash(flutter analyze:*)",
+      "Bash(flutter build:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(flutter pub get:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../services/database_helper.dart';
+import '../../services/firebase_service.dart';
 import '../../models/learning_module.dart';
 
 class LearningModuleFormScreen extends StatefulWidget {
@@ -46,7 +46,7 @@ class _LearningModuleFormScreenState extends State<LearningModuleFormScreen> {
 
     setState(() => _isLoading = true);
 
-    final db = DatabaseHelper.instance;
+    final firebaseService = FirebaseService.instance;
 
     if (widget.module == null) {
       // Create new module
@@ -55,8 +55,9 @@ class _LearningModuleFormScreenState extends State<LearningModuleFormScreen> {
         content: _contentController.text.trim(),
         difficulty: _selectedDifficulty,
         orderIndex: int.tryParse(_orderIndexController.text) ?? 0,
+        createdAt: DateTime.now(),
       );
-      await db.createLearningModule(newModule);
+      await firebaseService.createLearningModule(newModule);
     } else {
       // Update existing module
       final updatedModule = widget.module!.copyWith(
@@ -64,8 +65,9 @@ class _LearningModuleFormScreenState extends State<LearningModuleFormScreen> {
         content: _contentController.text.trim(),
         difficulty: _selectedDifficulty,
         orderIndex: int.tryParse(_orderIndexController.text) ?? 0,
+        updatedAt: DateTime.now(),
       );
-      await db.updateLearningModule(updatedModule);
+      await firebaseService.updateLearningModule(updatedModule);
     }
 
     setState(() => _isLoading = false);

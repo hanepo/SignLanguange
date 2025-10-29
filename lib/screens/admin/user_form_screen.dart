@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../services/database_helper.dart';
+import '../../services/firebase_service.dart';
 import '../../models/user.dart';
 
 class UserFormScreen extends StatefulWidget {
@@ -43,7 +43,7 @@ class _UserFormScreenState extends State<UserFormScreen> {
 
     setState(() => _isLoading = true);
 
-    final db = DatabaseHelper.instance;
+    final firebaseService = FirebaseService.instance;
 
     if (widget.user == null) {
       // Create new user
@@ -52,8 +52,9 @@ class _UserFormScreenState extends State<UserFormScreen> {
         password: _passwordController.text,
         fullName: _fullNameController.text.trim(),
         role: _selectedRole,
+        createdAt: DateTime.now(),
       );
-      await db.createUser(newUser);
+      await firebaseService.createUser(newUser);
     } else {
       // Update existing user
       final updatedUser = widget.user!.copyWith(
@@ -61,8 +62,9 @@ class _UserFormScreenState extends State<UserFormScreen> {
         password: _passwordController.text,
         fullName: _fullNameController.text.trim(),
         role: _selectedRole,
+        updatedAt: DateTime.now(),
       );
-      await db.updateUser(updatedUser);
+      await firebaseService.updateUser(updatedUser);
     }
 
     setState(() => _isLoading = false);

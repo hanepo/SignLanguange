@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../services/database_helper.dart';
+import '../../services/firebase_service.dart';
 import '../../models/sign_language_module.dart';
 import 'sign_module_form_screen.dart';
 
@@ -12,7 +12,7 @@ class ManageSignModulesScreen extends StatefulWidget {
 }
 
 class _ManageSignModulesScreenState extends State<ManageSignModulesScreen> {
-  final _db = DatabaseHelper.instance;
+  final _firebaseService = FirebaseService.instance;
   List<SignLanguageModule> _modules = [];
   bool _isLoading = true;
 
@@ -24,7 +24,7 @@ class _ManageSignModulesScreenState extends State<ManageSignModulesScreen> {
 
   Future<void> _loadModules() async {
     setState(() => _isLoading = true);
-    final modules = await _db.getAllSignModules();
+    final modules = await _firebaseService.getAllSignModules();
     setState(() {
       _modules = modules;
       _isLoading = false;
@@ -51,7 +51,7 @@ class _ManageSignModulesScreenState extends State<ManageSignModulesScreen> {
     );
 
     if (confirm == true && module.id != null) {
-      await _db.deleteSignModule(module.id!);
+      await _firebaseService.deleteSignModule(module.id!);
       _loadModules();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

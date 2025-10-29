@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../services/database_helper.dart';
+import '../../services/firebase_service.dart';
 import '../../models/user.dart';
 import 'user_form_screen.dart';
 
@@ -11,7 +11,7 @@ class ManageUsersScreen extends StatefulWidget {
 }
 
 class _ManageUsersScreenState extends State<ManageUsersScreen> {
-  final _db = DatabaseHelper.instance;
+  final _firebaseService = FirebaseService.instance;
   List<User> _users = [];
   bool _isLoading = true;
 
@@ -23,7 +23,7 @@ class _ManageUsersScreenState extends State<ManageUsersScreen> {
 
   Future<void> _loadUsers() async {
     setState(() => _isLoading = true);
-    final users = await _db.getAllUsers();
+    final users = await _firebaseService.getAllUsers();
     setState(() {
       _users = users;
       _isLoading = false;
@@ -50,7 +50,7 @@ class _ManageUsersScreenState extends State<ManageUsersScreen> {
     );
 
     if (confirm == true && user.id != null) {
-      await _db.deleteUser(user.id!);
+      await _firebaseService.deleteUser(user.id!);
       _loadUsers();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

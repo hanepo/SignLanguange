@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "640393951027",
+    "project_id": "signlink-840fb",
+    "storage_bucket": "signlink-840fb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640393951027:android:8d3eca99a1c6ce963b7046",
+        "android_client_info": {
+          "package_name": "com.example.signlink_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAXjNGOBtZ1YmOWAvCBk1q_QD7R11QZWU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
